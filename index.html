@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>Two Potatoes — Generative AI Video Production AIgency</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,900&family=Poppins:wght@400;500;600;700&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=14" />
+</head>
+<body>
+
+  <!-- ===================== NAV (over sky) ===================== -->
+  <header class="nav">
+    <nav class="nav__inner">
+      <a href="#" class="nav__logo" aria-label="Two Potatoes">
+        <img class="nav__logo-img" src="Assets/Logo/Logo%20White.png" alt="Two Potatoes" />
+      </a>
+      <div class="nav__center">
+        <a href="#intro" class="nav__link">About</a>
+        <a href="#services" class="nav__link">What We Do</a>
+        <a href="#board" class="nav__link">Our Work</a>
+        <a href="#details" class="nav__link">Process</a>
+        <a href="#contact" class="nav__link">Contact</a>
+      </div>
+      <div class="nav__right">
+        <a href="https://www.instagram.com/twopotatoes.ai/" class="nav__social" aria-label="Two Potatoes on Instagram" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="#fff" stroke="none"/></svg>
+        </a>
+        <a href="#contact" class="btn btn--white btn--sm">Work With Us</a>
+      </div>
+      <button class="nav__burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ===================== MEADOW HERO ===================== -->
+  <section class="meadow meadow--video" id="about">
+    <!-- background video -->
+    <video class="meadow__video" autoplay muted loop playsinline preload="auto" poster="Assets/posters/Landing%20Page.jpg" src="Assets/web/Landing%20Page.mp4"></video>
+
+    <!-- sky & clouds (CSS fallback, hidden when video is active) -->
+    <div class="cloud cloud--1"></div>
+    <div class="cloud cloud--2"></div>
+    <div class="cloud cloud--3"></div>
+    <div class="cloud cloud--4"></div>
+
+    <!-- ghost word behind the cards -->
+    <div class="meadow__wordmark">
+      <span class="meadow__ghost"><span class="meadow__ghost-ai">AI</span>GENCY</span>
+      <span class="meadow__tagline">The Future Of Visual Storytelling</span>
+    </div>
+
+    <!-- rolling hills -->
+    <div class="hill hill--back-left"></div>
+    <div class="hill hill--back-right"></div>
+    <div class="hill hill--left"></div>
+    <div class="hill hill--right"></div>
+    <div class="hill hill--front"></div>
+
+    <!-- flowers -->
+    <svg class="flowers flowers--left" viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg">
+      <g class="flower"><line x1="30" y1="118" x2="30" y2="80" stroke="#3f9243" stroke-width="4"/><path d="M20 82 Q20 62 30 58 Q40 62 40 82 Q35 90 30 90 Q25 90 20 82Z" fill="#ff5fa2"/></g>
+      <g class="flower"><line x1="70" y1="118" x2="70" y2="72" stroke="#3f9243" stroke-width="4"/><circle cx="70" cy="62" r="7" fill="#ffd94a"/><g fill="#ffffff"><circle cx="70" cy="48" r="8"/><circle cx="83" cy="57" r="8"/><circle cx="78" cy="72" r="8"/><circle cx="62" cy="72" r="8"/><circle cx="57" cy="57" r="8"/></g><circle cx="70" cy="60" r="6" fill="#ffb01f"/></g>
+      <g class="flower"><line x1="120" y1="118" x2="120" y2="86" stroke="#3f9243" stroke-width="4"/><path d="M111 88 Q111 70 120 66 Q129 70 129 88 Q125 95 120 95 Q115 95 111 88Z" fill="#b06cf5"/></g>
+      <g class="flower"><line x1="170" y1="118" x2="170" y2="78" stroke="#3f9243" stroke-width="4"/><path d="M160 80 Q160 60 170 56 Q180 60 180 80 Q175 88 170 88 Q165 88 160 80Z" fill="#ff8c42"/></g>
+    </svg>
+    <svg class="flowers flowers--right" viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg">
+      <g class="flower"><line x1="40" y1="118" x2="40" y2="76" stroke="#3f9243" stroke-width="4"/><path d="M30 78 Q30 58 40 54 Q50 58 50 78 Q45 86 40 86 Q35 86 30 78Z" fill="#ff5fa2"/></g>
+      <g class="flower"><line x1="95" y1="118" x2="95" y2="70" stroke="#3f9243" stroke-width="4"/><circle cx="95" cy="60" r="7" fill="#ffd94a"/><g fill="#ffffff"><circle cx="95" cy="46" r="8"/><circle cx="108" cy="55" r="8"/><circle cx="103" cy="70" r="8"/><circle cx="87" cy="70" r="8"/><circle cx="82" cy="55" r="8"/></g><circle cx="95" cy="58" r="6" fill="#ffb01f"/></g>
+      <g class="flower"><line x1="150" y1="118" x2="150" y2="84" stroke="#3f9243" stroke-width="4"/><path d="M141 86 Q141 68 150 64 Q159 68 159 86 Q155 93 150 93 Q145 93 141 86Z" fill="#5aa9ff"/></g>
+      <g class="flower"><line x1="195" y1="118" x2="195" y2="80" stroke="#3f9243" stroke-width="4"/><path d="M186 82 Q186 62 195 58 Q204 62 204 82 Q200 90 195 90 Q190 90 186 82Z" fill="#ffd94a"/></g>
+    </svg>
+
+    <!-- butterflies -->
+    <div class="butterfly butterfly--1"><span class="butterfly__wing butterfly__wing--l"></span><span class="butterfly__wing butterfly__wing--r"></span></div>
+    <div class="butterfly butterfly--2"><span class="butterfly__wing butterfly__wing--l"></span><span class="butterfly__wing butterfly__wing--r"></span></div>
+    <div class="butterfly butterfly--3"><span class="butterfly__wing butterfly__wing--l"></span><span class="butterfly__wing butterfly__wing--r"></span></div>
+
+    <!-- tilted cards fan -->
+    <div class="fan">
+      <span class="sticker sticker--left">Think Bigger</span>
+      <span class="sticker sticker--right">Make Anything</span>
+
+      <div class="fan__card fan__card--1">
+        <video class="fan__video" src="Assets/Hero%20Section/web/Watch%20AI%20Video.mp4" poster="Assets/posters/Watch%20AI%20Video.jpg" autoplay muted loop playsinline preload="metadata"></video>
+      </div>
+
+      <div class="fan__card fan__card--2">
+        <video class="fan__video" src="Assets/Hero%20Section/web/13th%20Aug.mp4" poster="Assets/posters/13th%20Aug.jpg" autoplay muted loop playsinline preload="metadata"></video>
+      </div>
+
+      <div class="fan__card fan__card--3">
+        <video class="fan__video" src="Assets/Hero%20Section/web/Double%20Horse.mp4" poster="Assets/posters/Double%20Horse.jpg" autoplay muted loop playsinline preload="metadata"></video>
+      </div>
+
+      <div class="fan__card fan__card--4">
+        <video class="fan__video" src="Assets/Hero%20Section/web/24th%20Aug.mp4" poster="Assets/posters/24th%20Aug.jpg" autoplay muted loop playsinline preload="metadata"></video>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="meadow__cta">
+      <a href="#contact" class="btn btn--white btn--lg">Work With Us</a>
+      <span class="meadow__note">AI-powered. Human-directed.</span>
+    </div>
+  </section>
+
+  <div class="page-flow">
+
+  <!-- ===================== INTRO ===================== -->
+  <section class="intro" id="intro">
+    <div class="intro__grid">
+      <div class="intro__text">
+        <h2 class="intro__title">Two Potatoes</h2>
+        <p class="intro__lead">We’re Two Potatoes, a next-gen creative studio built for brands that refuse to look like everyone else.</p>
+        <p class="intro__body">We combine sharp ideas, cinematic storytelling, and generative AI to create films, campaigns, and visual worlds that push what’s possible. Less about following the rules. More about making something people haven’t seen before.</p>
+      </div>
+      <div class="intro__media">
+        <div class="intro__video-frame">
+          <video src="Assets/Videos/web/Launch.mp4" poster="Assets/posters/Launch.jpg" muted loop playsinline preload="none"></video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BRAND BOARD (bento grid) ===================== -->
+  <section class="board" id="board" aria-labelledby="board-title">
+    <div class="details__head">
+      <span class="details__eyebrow">Our work</span>
+      <h2 class="details__title" id="board-title">Stuff we<br/>love to make</h2>
+    </div>
+
+    <div class="board__grid">
+
+      <div class="board__tile board__tile--film">
+        <video class="board__video board__video--cover" src="Assets/Videos/web/Real%20Estate.mp4" poster="Assets/posters/Real%20Estate.jpg" muted loop playsinline preload="none"></video>
+        <h3 class="board__heading">Real Estate</h3>
+      </div>
+
+      <div class="board__tile board__tile--face">
+        <video class="board__video board__video--cover" src="Assets/Videos/web/Product.mp4" poster="Assets/posters/Product.jpg" muted loop playsinline preload="none"></video>
+        <h3 class="board__heading">Product</h3>
+      </div>
+
+      <div class="board__tile board__tile--sign">
+        <video class="board__video board__video--cover" src="Assets/Videos/web/Apple%20AI.mp4" poster="Assets/posters/Apple%20AI.jpg" muted loop playsinline preload="none"></video>
+        <h3 class="board__heading">Commercial</h3>
+      </div>
+
+      <div class="board__tile board__tile--logo">
+        <img src="Assets/Logo/Logo%20Black.png" alt="Two Potatoes" loading="lazy" decoding="async" />
+      </div>
+
+      <div class="board__tile board__tile--phone">
+        <video class="board__video board__video--cover" src="Assets/Videos/web/Cecil%20Wright%20-%20Felicita.mp4" poster="Assets/posters/Cecil%20Wright%20-%20Felicita.jpg" muted loop playsinline preload="none"></video>
+        <h3 class="board__heading">Luxury</h3>
+      </div>
+
+      <div class="board__tile board__tile--for">
+        <video class="board__video board__video--cover" src="Assets/Videos/web/Bikini.mp4" poster="Assets/posters/Bikini.jpg" muted loop playsinline preload="none"></video>
+        <h3 class="board__heading">Lifestyle</h3>
+      </div>
+
+      <div class="board__tile board__tile--shout" aria-live="off">
+        <div class="shout shout--1 is-active"><p class="shout__mega">Make it<br/>unmissable</p></div>
+        <div class="shout shout--2"><p class="shout__body">Two Potatoes is an AIgency making films, campaigns<br/>and visuals that stop the scroll and stay in the head.</p></div>
+        <div class="shout shout--3"><p class="shout__caps">Ideas should move people,<br/>not just pixels.</p></div>
+        <div class="shout shout--4"><p class="shout__serif">Good stories are<br/>always a good look</p></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== DETAILS (scrollable cards) ===================== -->
+  <section class="details" id="details">
+
+    <!-- corner stickers -->
+    <svg class="details__sticker details__sticker--left" viewBox="0 0 120 120" aria-hidden="true">
+      <path d="M60 4 L72 20 L92 14 L94 34 L114 40 L104 58 L116 76 L96 82 L94 102 L74 98 L60 116 L46 98 L26 102 L24 82 L4 76 L16 58 L6 40 L26 34 L28 14 L48 20 Z" fill="#ff5964"/>
+      <text x="60" y="56" text-anchor="middle">MADE</text>
+      <text x="60" y="76" text-anchor="middle">WITH AI</text>
+    </svg>
+    <svg class="details__sticker details__sticker--right" viewBox="0 0 120 120" aria-hidden="true">
+      <circle cx="60" cy="60" r="54" fill="#8fd3ff" stroke="#1d1d1d" stroke-width="3"/>
+      <circle cx="60" cy="60" r="40" fill="none" stroke="#1d1d1d" stroke-width="2" stroke-dasharray="4 6"/>
+      <text x="60" y="56" text-anchor="middle">HUMAN</text>
+      <text x="60" y="76" text-anchor="middle">DIRECTED</text>
+    </svg>
+
+    <div class="details__head">
+      <span class="details__eyebrow">How we work</span>
+      <h2 class="details__title">We've thought of<br/>every little detail</h2>
+    </div>
+
+    <div class="details__slider">
+      <button class="details__arrow details__arrow--prev" type="button" aria-label="Previous cards">
+        <svg viewBox="0 0 60 40" aria-hidden="true">
+          <path d="M56 22 C44 19, 30 23, 8 20"/>
+          <path d="M20 8 C15 13, 11 16, 7 20 C11 24, 15 28, 21 33"/>
+        </svg>
+      </button>
+
+      <div class="details__track">
+        <article class="detail-card detail-card--purple">
+          <svg class="detail-card__art" viewBox="0 0 240 120" aria-hidden="true">
+            <path d="M0 60 C30 52 60 82 96 88 C106 90 112 92 118 92"/>
+            <path d="M118 86 C106 76 100 64 100 52 A24 24 0 0 1 148 52 C148 64 142 76 130 86 Z"/>
+            <path d="M118 92 H130 M120 98 H128"/>
+            <path d="M114 60 L119 51 L124 60 L129 51 L134 60"/>
+            <path d="M124 14 V6 M98 24 L92 18 M150 24 L156 18"/>
+            <path d="M130 92 C150 92 170 70 200 66 C215 64 228 60 240 60"/>
+          </svg>
+          <span class="detail-card__num">01</span>
+          <h3 class="detail-card__title">Ideas first, AI second</h3>
+          <p class="detail-card__text">Every project starts with a sharp concept and a clear story. The tools come after, so the work feels intentional, not generated.</p>
+        </article>
+
+        <article class="detail-card detail-card--orange">
+          <svg class="detail-card__art" viewBox="0 0 240 120" aria-hidden="true">
+            <path d="M0 60 C30 52 60 74 98 72"/>
+            <path d="M98 58 H150 V96 H98 Z"/>
+            <path d="M98 58 L146 44 L150 52 L102 66"/>
+            <path d="M110 54 L116 47 M124 50 L130 43 M138 46 L144 40"/>
+            <path d="M108 74 H140 M108 84 H128"/>
+            <path d="M150 72 C180 66 210 56 240 60"/>
+          </svg>
+          <span class="detail-card__num">02</span>
+          <h3 class="detail-card__title">Cinematic in every frame</h3>
+          <p class="detail-card__text">Lighting, camera moves, colour and pacing are directed like a real shoot.</p>
+        </article>
+
+        <article class="detail-card detail-card--pink">
+          <svg class="detail-card__art" viewBox="0 0 240 120" aria-hidden="true">
+            <path d="M0 60 C30 70 60 48 100 60"/>
+            <path d="M108 24 H132 A8 8 0 0 1 140 32 V88 A8 8 0 0 1 132 96 H108 A8 8 0 0 1 100 88 V32 A8 8 0 0 1 108 24 Z"/>
+            <path d="M115 49 L129 58 L115 67 Z"/>
+            <path d="M116 31 H124"/>
+            <path d="M140 60 C170 48 200 74 240 60"/>
+          </svg>
+          <span class="detail-card__num">03</span>
+          <h3 class="detail-card__title">Ready for any platform</h3>
+          <p class="detail-card__text">From 6-second hooks to full brand films, we cut and format for reels, ads, web and the big screen.</p>
+        </article>
+
+        <article class="detail-card detail-card--yellow">
+          <svg class="detail-card__art" viewBox="0 0 240 120" aria-hidden="true">
+            <path d="M0 60 C20 66 40 54 62 58 H112 L96 86 L150 36 L134 62 H180 C205 62 222 56 240 60"/>
+            <path d="M52 40 H30 M58 80 H32 M190 44 H210"/>
+          </svg>
+          <span class="detail-card__num">04</span>
+          <h3 class="detail-card__title">Fast and easy to work with</h3>
+          <p class="detail-card__text">Clear timelines, quick revisions and one team from concept to final delivery. No chaos, just shipped work.</p>
+        </article>
+
+        <article class="detail-card detail-card--blue">
+          <svg class="detail-card__art" viewBox="0 0 240 120" aria-hidden="true">
+            <path d="M0 60 C30 50 60 84 120 80 C170 84 200 52 240 60"/>
+            <path d="M120 80 C96 64 88 50 96 40 C104 30 116 32 120 42 C124 32 136 30 144 40 C152 50 144 64 120 80 Z"/>
+            <path d="M172 24 V38 M165 31 H179"/>
+          </svg>
+          <span class="detail-card__num">05</span>
+          <h3 class="detail-card__title">Built around your brand</h3>
+          <p class="detail-card__text">Your colours, characters, products and tone stay consistent across every visual we make.</p>
+        </article>
+
+        <article class="detail-card detail-card--green">
+          <svg class="detail-card__art" viewBox="0 0 240 120" aria-hidden="true">
+            <path d="M0 60 C30 60 50 40 80 52 C100 60 96 84 80 80 C64 76 72 48 100 46 C130 44 140 70 170 60 C182 56 190 50 196 42"/>
+            <path d="M210 24 Q212 38 226 40 Q212 42 210 56 Q208 42 194 40 Q208 38 210 24 Z"/>
+            <path d="M232 18 V26 M228 22 H236"/>
+          </svg>
+          <span class="detail-card__num">06</span>
+          <h3 class="detail-card__title">Always testing what's next</h3>
+          <p class="detail-card__text">We try every new model and workflow first, so your brand gets the newest look before anyone else.</p>
+        </article>
+      </div>
+
+      <button class="details__arrow details__arrow--next" type="button" aria-label="Next cards">
+        <svg viewBox="0 0 60 40" aria-hidden="true">
+          <path d="M4 18 C16 21, 30 17, 52 20"/>
+          <path d="M40 7 C45 12, 49 16, 53 20 C49 24, 45 28, 39 33"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===================== SERVICES ===================== -->
+  <section class="services" id="services">
+    <div class="services__head">
+      <h2 class="services__title">Our Services</h2>
+      <svg class="services__star" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M50 0 L59 34 L86 14 L66 41 L100 50 L66 59 L86 86 L59 66 L50 100 L41 66 L14 86 L34 59 L0 50 L34 41 L14 14 L41 34 Z" fill="#ffe81e"/>
+      </svg>
+    </div>
+
+    <svg class="services__arrow services__arrow--tl" viewBox="0 0 40 40" aria-hidden="true">
+      <path d="M8 8 L30 30 M30 14 L30 30 L14 30"/>
+    </svg>
+    <svg class="services__arrow services__arrow--br" viewBox="0 0 40 40" aria-hidden="true">
+      <path d="M8 8 L30 30 M30 14 L30 30 L14 30"/>
+    </svg>
+
+    <div class="services__stack">
+
+      <article class="service-card service-card--lime">
+        <h3 class="service-card__name"><span class="service-card__num">01</span> AI Films</h3>
+        <p class="service-card__desc">Cinematic brand films, commercials, short films, music videos and narrative content.</p>
+      </article>
+
+      <article class="service-card service-card--lime">
+        <h3 class="service-card__name"><span class="service-card__num">02</span> AI Campaigns</h3>
+        <p class="service-card__desc">Concept-led campaigns built for launches, social, digital and brand storytelling.</p>
+      </article>
+
+      <article class="service-card service-card--outline">
+        <h3 class="service-card__name"><span class="service-card__num">03</span> AI Visuals</h3>
+        <p class="service-card__desc">AI-powered product photography, fashion imagery, key visuals, posters and campaign assets.</p>
+      </article>
+
+      <article class="service-card service-card--lime">
+        <h3 class="service-card__name"><span class="service-card__num">04</span> AI Content</h3>
+        <p class="service-card__desc">Short-form videos, social content, creative experiments and scroll-stopping visual content.</p>
+      </article>
+
+      <article class="service-card service-card--lime">
+        <h3 class="service-card__name"><span class="service-card__num">05</span> AI Avatars</h3>
+        <p class="service-card__desc">Digital personalities, virtual spokespeople and avatar-led content built for brands.</p>
+      </article>
+
+      <article class="service-card service-card--outline">
+        <h3 class="service-card__name"><span class="service-card__num">06</span> AI UGC</h3>
+        <p class="service-card__desc">Authentic-looking creator content, product testimonials, reviews and social-first videos made with AI.</p>
+      </article>
+
+      <article class="service-card service-card--lime">
+        <h3 class="service-card__name"><span class="service-card__num">07</span> Creative Development</h3>
+        <p class="service-card__desc">From concept and visual direction to storyboards, treatments and production. Turning an idea into something worth making.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===================== FOUNDERS ===================== -->
+  <section class="team" id="team">
+    <h2 class="team__title">Meet the Potatoes</h2>
+
+    <article class="founder founder--left">
+      <div class="founder__media">
+        <div class="founder__frame">
+          <img class="founder__photo" loading="lazy" decoding="async" src="Assets/Founder.jpeg" alt="Abhigyan Gupta, Founder &amp; AI Filmmaker at Two Potatoes" />
+        </div>
+        <span class="founder__badge">Founder</span>
+      </div>
+      <div class="founder__info">
+        <span class="founder__kicker">Potato One</span>
+        <h3 class="founder__name">Abhigyan Gupta</h3>
+        <span class="founder__role">Founder &amp; AI Filmmaker</span>
+        <p class="founder__bio">The mind behind Two Potatoes. An AI filmmaker obsessed with turning bold ideas into cinematic visuals, films, and worlds that feel impossible to ignore.</p>
+        <p class="founder__bio">At Two Potatoes, he leads the creative vision from concept to final frame, combining storytelling, visual craft, and generative AI to make ideas come alive.</p>
+        <ul class="founder__facts">
+          <li>AI films &amp; visual storytelling</li>
+          <li>Creative direction &amp; concept development</li>
+          <li>Always testing what AI can do next</li>
+        </ul>
+        <div class="founder__links">
+          <a href="https://www.linkedin.com/in/abhigyan-gupta-438867175/" target="_blank" rel="noopener noreferrer" class="btn btn--ghost btn--sm">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/abhigyan-gupta-438867175/" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--sm">Say Hello</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="founder founder--right">
+      <div class="founder__media">
+        <div class="founder__frame founder__frame--pink">
+          <img class="founder__photo" loading="lazy" decoding="async" src="Assets/C-Founder-web.jpg" alt="Shambhavi Sugam, Co-Founder &amp; COO of Two Potatoes" />
+        </div>
+        <span class="founder__badge founder__badge--pink">Co-Founder</span>
+      </div>
+      <div class="founder__info">
+        <span class="founder__kicker">Potato Two</span>
+        <h3 class="founder__name">Shambhavi Sugam</h3>
+        <span class="founder__role">Co-Founder &amp; COO</span>
+        <p class="founder__bio">The force that keeps Two Potatoes moving. Shambhavi brings structure to the creative chaos, turning big ideas into well-run projects, strong partnerships, and work that actually gets shipped.</p>
+        <p class="founder__bio">She leads operations, business development, and the systems behind the studio, making sure the creative ambition is matched by equally strong execution.</p>
+        <ul class="founder__facts">
+          <li>Operations &amp; business development</li>
+          <li>Partnerships &amp; project management</li>
+          <li>Keeping the potatoes on track</li>
+        </ul>
+        <div class="founder__links">
+          <a href="https://www.linkedin.com/in/shambhavi-sugam-457976425/" target="_blank" rel="noopener noreferrer" class="btn btn--ghost btn--sm">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/shambhavi-sugam-457976425/" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--sm">Say Hello</a>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ===================== CTA / FOOTER ===================== -->
+  <section class="cta" id="contact">
+    <h2 class="cta__title">Let's make your brand<br/>impossible to ignore</h2>
+    <form class="brief" action="https://formsubmit.co/hola@twopotatoes.io" method="POST">
+      <input type="hidden" name="_subject" value="New project enquiry from twopotatoes website" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="text" name="_honey" class="brief__honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+      <div class="brief__grid">
+        <label class="brief__field">
+          <span>Brand name</span>
+          <input type="text" name="Brand name" placeholder="Your brand" required minlength="2" maxlength="80" autocomplete="organization" />
+        </label>
+        <label class="brief__field">
+          <span>Email ID</span>
+          <input type="email" name="email" placeholder="you@brand.com" required maxlength="120" autocomplete="email" />
+        </label>
+        <label class="brief__field">
+          <span>Website <em>(if any)</em></span>
+          <input type="text" name="Website" placeholder="brand.com" maxlength="120" autocomplete="url" inputmode="url" />
+        </label>
+        <label class="brief__field">
+          <span>Instagram <em>(if any)</em></span>
+          <input type="text" name="Instagram" placeholder="@yourbrand" maxlength="60" pattern="@?[A-Za-z0-9._]{1,30}" title="Instagram handle, e.g. @yourbrand" />
+        </label>
+        <label class="brief__field brief__field--wide">
+          <span>WhatsApp number <em>(if any)</em></span>
+          <input type="tel" name="WhatsApp" placeholder="+91 98765 43210" maxlength="20" pattern="[0-9+\(\)\-\s]{7,20}" title="Phone number with country code" autocomplete="tel" />
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--lg brief__submit">Start a project</button>
+      <p class="brief__status" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <footer class="footer">
+    <img class="footer__logo-img" src="Assets/Logo/Logo%20Black.png" alt="Two Potatoes" loading="lazy" decoding="async" />
+    <span class="footer__copy">© 2026 Two Potatoes Studio</span>
+  </footer>
+
+  </div>
+
+  <script src="script.js?v=14"></script>
+</body>
+</html>
