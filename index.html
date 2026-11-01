@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,900&family=Poppins:wght@400;500;600;700&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=17" />
+  <link rel="stylesheet" href="styles.css?v=18" />
 </head>
 <body>
 
@@ -146,7 +146,7 @@
       <div class="board__tile board__tile--face">
         <video class="board__video board__video--cover" src="Assets/Videos/web/Product.mp4" poster="Assets/posters/Product.jpg" muted loop playsinline preload="none"></video>
         <h3 class="board__heading">Product</h3>
-        <button class="board__play" type="button" data-ratio="9 / 16" aria-label="Play Product video with sound"></button>
+        <button class="board__play" type="button" data-ratio="9 / 16" data-more="Perfume" aria-label="Play Product videos with sound"></button>
       </div>
 
       <div class="board__tile board__tile--sign">
@@ -451,15 +451,29 @@
   <!-- ===================== POP-UP VIDEO PLAYER ===================== -->
   <dialog class="player" aria-labelledby="player-title">
     <p class="player__title" id="player-title"></p>
-    <div class="player__stage">
-      <video class="player__video" controls playsinline loop preload="auto"></video>
-      <span class="player__spinner" aria-hidden="true"></span>
+    <div class="player__reel">
+      <div class="player__slide">
+        <div class="player__stage">
+          <img class="player__poster" alt="" />
+          <video class="player__video" controls playsinline loop preload="auto"></video>
+          <span class="player__spinner" aria-hidden="true"></span>
+        </div>
+      </div>
     </div>
     <button class="player__close" type="button" aria-label="Close video">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5 L19 19 M19 5 L5 19"/></svg>
     </button>
+    <div class="player__nav">
+      <button class="player__step player__step--prev" type="button" aria-label="Previous video" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15 L12 8 L19 15"/></svg>
+      </button>
+      <button class="player__step player__step--next" type="button" aria-label="Next video" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9 L12 16 L19 9"/></svg>
+      </button>
+    </div>
+    <p class="player__hint" hidden>Scroll for next video</p>
   </dialog>
 
-  <script src="script.js?v=17"></script>
+  <script src="script.js?v=18"></script>
 </body>
 </html>

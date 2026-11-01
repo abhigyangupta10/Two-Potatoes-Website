@@ -674,13 +674,12 @@ html:has(.player[open]) body { padding-right: var(--scrollbar, 0); }
   position: fixed;
   inset: 0;
   z-index: 200;
-  display: grid;
-  place-items: center;
+  display: block;
   width: 100%;
   height: 100%;
   max-width: none;
   max-height: none;
-  padding: var(--bar) var(--gutter) var(--gutter);
+  overflow: hidden;
   border: 0;
   color: #fff;
   background: rgba(10, 10, 16, .96);
@@ -688,6 +687,27 @@ html:has(.player[open]) body { padding-right: var(--scrollbar, 0); }
 }
 @supports (height: 100dvh) {
   .player[open] { --vh: 100dvh; }
+}
+
+/* one screen per film, so a swipe always lands exactly on the next one */
+.player__reel {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+.player__reel::-webkit-scrollbar { display: none; }
+
+.player__slide {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  padding: var(--bar) var(--gutter) var(--gutter);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 /* sized from the film's ratio up front, so nothing jumps when the video loads */
@@ -701,7 +721,17 @@ html:has(.player[open]) body { padding-right: var(--scrollbar, 0); }
   animation: playerPop .3s cubic-bezier(.2,.9,.3,1.3);
 }
 
+/* what a slide shows while the one <video> is on another slide */
+.player__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .player__video {
+  position: relative;
   display: block;
   width: 100%;
   height: 100%;
@@ -711,6 +741,7 @@ html:has(.player[open]) body { padding-right: var(--scrollbar, 0); }
 
 .player__title {
   position: absolute;
+  z-index: 1;
   top: 0; left: var(--gutter); right: 80px;
   height: var(--bar);
   display: flex;
@@ -723,9 +754,8 @@ html:has(.player[open]) body { padding-right: var(--scrollbar, 0); }
   pointer-events: none;
 }
 
-.player__close {
-  position: absolute;
-  top: 10px; right: var(--gutter);
+.player__close,
+.player__step {
   width: 44px; height: 44px;
   display: grid;
   place-items: center;
@@ -735,15 +765,52 @@ html:has(.player[open]) body { padding-right: var(--scrollbar, 0); }
   cursor: pointer;
   transition: transform .25s cubic-bezier(.2,.9,.3,1.3);
 }
-.player__close:hover { transform: scale(1.12); }
-.player__close:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
-.player__close svg {
+.player__close {
+  position: absolute;
+  z-index: 1;
+  top: 10px; right: var(--gutter);
+}
+.player__close:hover,
+.player__step:hover { transform: scale(1.12); }
+.player__close:focus-visible,
+.player__step:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.player__close svg,
+.player__step svg {
   width: 20px; height: 20px;
   fill: none;
   stroke: #1d1d1d;
   stroke-width: 3.5;
   stroke-linecap: round;
+  stroke-linejoin: round;
 }
+
+/* previous / next, only on tiles with more than one film */
+.player__nav {
+  position: absolute;
+  z-index: 1;
+  top: 50%; right: var(--gutter);
+  display: grid;
+  gap: 10px;
+  transform: translateY(-50%);
+}
+.player__step[hidden] { display: none; }
+
+.player__hint {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: calc(var(--gutter) + 76px);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  color: #1d1d1d;
+  background: #ffe81e;
+  pointer-events: none;
+  animation: playerHint 5s ease-out forwards;
+}
+.player__hint[hidden] { display: none; }
 
 /* the delay keeps it from flashing when the film starts straight away */
 .player__spinner {
@@ -763,6 +830,11 @@ html:has(.player[open]) body { padding-right: var(--scrollbar, 0); }
 @keyframes playerFade { from { opacity: 0; } }
 @keyframes playerPop { from { opacity: 0; transform: translateY(14px) scale(.92); } }
 @keyframes playerSpin { to { transform: rotate(360deg); } }
+@keyframes playerHint {
+  0% { opacity: 0; transform: translate(-50%, 10px); }
+  8%, 85% { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, 0); }
+}
 
 @media (max-width: 860px) {
   .player[open] { --bar: 60px; --gutter: 12px; }
@@ -1416,5 +1488,5 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); }
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
-  html { scroll-behavior: auto; }
+  html, .player__reel { scroll-behavior: auto; }
 }

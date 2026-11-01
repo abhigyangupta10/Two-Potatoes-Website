@@ -40,8 +40,13 @@ if (videos.length) {
 const player = document.querySelector(".player");
 if (player) {
   const film = player.querySelector(".player__video");
-  const stage = player.querySelector(".player__stage");
+  const spinner = player.querySelector(".player__spinner");
+  const reel = player.querySelector(".player__reel");
+  const firstSlide = player.querySelector(".player__slide");
   const title = player.querySelector(".player__title");
+  const prev = player.querySelector(".player__step--prev");
+  const next = player.querySelector(".player__step--next");
+  const hint = player.querySelector(".player__hint");
   const root = document.documentElement;
   const net = navigator.connection;
 
@@ -56,13 +61,26 @@ if (player) {
     return sizes[Math.max(slow ? 2 : phone ? 1 : 0, lowest)];
   };
 
-  // the tile plays Assets/Videos/web/X.mp4, its film is Assets/Videos/play/1080/X.mp4
-  const load = (btn) => {
+  // the tile plays Assets/Videos/web/X.mp4, its film is Assets/Videos/play/1080/X.mp4.
+  // data-more names the tile's other films, kept in the same folders
+  const filmsOf = (btn) => {
     const tile = btn.parentElement.querySelector("video");
-    const src = tile.getAttribute("src").replace("/web/", `/play/${pickSize()}/`);
-    if (film.getAttribute("src") === src) return;
-    film.poster = tile.poster;
-    film.src = src;
+    const src = tile.getAttribute("src");
+    const poster = tile.getAttribute("poster");
+    const more = btn.dataset.more ? btn.dataset.more.split(",") : [];
+    return [
+      { src, poster },
+      ...more.map((name) => ({
+        src: src.replace(/[^/]+\.mp4$/, `${name}.mp4`),
+        poster: poster.replace(/[^/]+\.jpg$/, `${name}.jpg`),
+      })),
+    ];
+  };
+  const load = ({ src, poster }) => {
+    const sized = src.replace("/web/", `/play/${pickSize()}/`);
+    if (film.getAttribute("src") === sized) return;
+    film.poster = poster;
+    film.src = sized;
   };
 
   const start = () => {
@@ -85,14 +103,14 @@ if (player) {
     start();
   };
   const buffering = () => {
-    stage.classList.add("is-loading");
+    film.parentElement.classList.add("is-loading");
     clearTimeout(stallTimer);
     if (film.getAttribute("src").includes(`/play/${sizes[sizes.length - 1]}/`)) return;
     // the first frame gets more patience than a stall in the middle of the film
     stallTimer = setTimeout(stepDown, film.currentTime > 0 ? 1000 : 4000);
   };
   const buffered = () => {
-    stage.classList.remove("is-loading");
+    film.parentElement.classList.remove("is-loading");
     clearTimeout(stallTimer);
   };
   film.addEventListener("loadedmetadata", () => {
@@ -102,15 +120,101 @@ if (player) {
   film.addEventListener("waiting", buffering);
   ["playing", "pause", "error"].forEach((type) => film.addEventListener(type, buffered));
 
+  // The reel: one slide per film, with the one <video> on the slide in view and posters
+  // on the others. Phones let the film that started from the tap keep its sound later on
+  let films = [];
+  let current = 0;
+  let heading = "";
+  const slides = [firstSlide];
+  const stageOf = (slide) => slide.querySelector(".player__stage");
+
+  const addSlide = ({ poster }) => {
+    const slide = document.createElement("div");
+    slide.className = "player__slide";
+    slide.innerHTML = '<div class="player__stage"><img class="player__poster" alt="" /></div>';
+    slide.querySelector("img").src = poster;
+    reel.append(slide);
+    slides.push(slide);
+  };
+
+  const mark = () => {
+    title.textContent = films.length > 1 ? `${heading} ${current + 1}/${films.length}` : heading;
+    prev.hidden = current === 0;
+    next.hidden = current === films.length - 1;
+    hint.hidden = next.hidden;
+  };
+
+  const show = (i) => {
+    buffered();
+    resumeAt = 0;
+    film.pause();
+    current = i;
+    stageOf(slides[i]).append(film, spinner);
+    load(films[i]);
+    start();
+    buffering();
+    mark();
+  };
+
+  // buttons, keys and the wheel: called inside the input, so the sound is never in doubt
+  const go = (step) => {
+    const slide = slides[current + step];
+    if (!slide) return;
+    show(current + step);
+    reel.scrollTo({ top: slide.offsetTop });
+  };
+
+  // a swipe scrolls the reel by itself, the film changes once the next slide takes over
+  const onSlide = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(({ target, isIntersecting }) => {
+        const i = slides.indexOf(target);
+        if (isIntersecting && i !== current) show(i);
+      });
+    },
+    { root: reel, threshold: 0.6 }
+  );
+
+  // a wheel tick is too short for the snap to carry over, so it turns a whole slide
+  let wheelAt = 0;
+  reel.addEventListener(
+    "wheel",
+    (e) => {
+      if (films.length < 2) return;
+      e.preventDefault();
+      if (!e.deltaY || e.timeStamp < wheelAt) return;
+      wheelAt = e.timeStamp + 700;
+      go(Math.sign(e.deltaY));
+    },
+    { passive: false }
+  );
+
+  // on the document: the button in focus can hide itself on the last slide
+  document.addEventListener("keydown", (e) => {
+    const step = { ArrowDown: 1, PageDown: 1, ArrowUp: -1, PageUp: -1 }[e.key];
+    if (!step || films.length < 2) return;
+    e.preventDefault();
+    go(step);
+  });
+
+  prev.addEventListener("click", () => go(-1));
+  next.addEventListener("click", () => go(1));
+
   const open = (btn) => {
-    load(btn);
+    films = filmsOf(btn);
+    load(films[0]);
     if (!player.showModal) return window.open(film.src); // browsers older than <dialog>
-    stage.style.setProperty("--ratio", btn.dataset.ratio);
-    title.textContent = btn.parentElement.querySelector(".board__heading").textContent;
+    reel.style.setProperty("--ratio", btn.dataset.ratio);
+    firstSlide.querySelector(".player__poster").src = films[0].poster;
+    films.slice(1).forEach(addSlide);
+    heading = btn.parentElement.querySelector(".board__heading").textContent;
+    mark();
     root.style.setProperty("--scrollbar", `${window.innerWidth - root.clientWidth}px`);
     videosOnHold = true;
     videos.forEach((v) => v.pause());
     player.showModal();
+    reel.scrollTo({ top: 0, behavior: "instant" }); // a closed dialog remembers where it was
+    slides.forEach((slide) => onSlide.observe(slide));
     // has to stay inside the click, or browsers block the sound
     film.muted = false;
     start();
@@ -121,7 +225,7 @@ if (player) {
     // with a mouse the hover buffers the film, so the click starts it right away
     let hoverTimer;
     btn.addEventListener("pointerenter", (e) => {
-      if (e.pointerType === "mouse" && !(net && net.saveData)) hoverTimer = setTimeout(() => load(btn), 150);
+      if (e.pointerType === "mouse" && !(net && net.saveData)) hoverTimer = setTimeout(() => load(filmsOf(btn)[0]), 150);
     });
     btn.addEventListener("pointerleave", () => clearTimeout(hoverTimer));
     btn.addEventListener("click", () => {
@@ -131,15 +235,19 @@ if (player) {
   });
 
   player.querySelector(".player__close").addEventListener("click", () => player.close());
-  // clicks beside the video land on the dialog itself
   player.addEventListener("click", (e) => {
-    if (e.target === player) player.close();
+    if (!e.target.closest(".player__stage, button")) player.close();
   });
   // every way out ends here: the close button, a click beside the video, Esc, Android back
   player.addEventListener("close", () => {
     buffered();
     resumeAt = 0;
     film.pause();
+    onSlide.disconnect();
+    stageOf(firstSlide).append(film, spinner);
+    slides.splice(1).forEach((slide) => slide.remove());
+    films = [];
+    current = 0;
     film.removeAttribute("src");
     film.load(); // stops the download and frees the decoder
     videosOnHold = false;
