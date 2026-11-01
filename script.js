@@ -89,7 +89,7 @@ if (player) {
     clearTimeout(stallTimer);
     if (film.getAttribute("src").includes(`/play/${sizes[sizes.length - 1]}/`)) return;
     // the first frame gets more patience than a stall in the middle of the film
-    stallTimer = setTimeout(stepDown, film.currentTime > 0 ? 1000 : 2500);
+    stallTimer = setTimeout(stepDown, film.currentTime > 0 ? 1000 : 4000);
   };
   const buffered = () => {
     stage.classList.remove("is-loading");
