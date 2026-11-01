@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,900&family=Poppins:wght@400;500;600;700&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=14" />
+  <link rel="stylesheet" href="styles.css?v=15" />
 </head>
 <body>
 
@@ -140,16 +140,19 @@
       <div class="board__tile board__tile--film">
         <video class="board__video board__video--cover" src="Assets/Videos/web/Real%20Estate.mp4" poster="Assets/posters/Real%20Estate.jpg" muted loop playsinline preload="none"></video>
         <h3 class="board__heading">Real Estate</h3>
+        <button class="board__play" type="button" data-ratio="16 / 9" aria-label="Play Real Estate video with sound"></button>
       </div>
 
       <div class="board__tile board__tile--face">
         <video class="board__video board__video--cover" src="Assets/Videos/web/Product.mp4" poster="Assets/posters/Product.jpg" muted loop playsinline preload="none"></video>
         <h3 class="board__heading">Product</h3>
+        <button class="board__play" type="button" data-ratio="9 / 16" aria-label="Play Product video with sound"></button>
       </div>
 
       <div class="board__tile board__tile--sign">
         <video class="board__video board__video--cover" src="Assets/Videos/web/Apple%20AI.mp4" poster="Assets/posters/Apple%20AI.jpg" muted loop playsinline preload="none"></video>
         <h3 class="board__heading">Commercial</h3>
+        <button class="board__play" type="button" data-ratio="9 / 16" aria-label="Play Commercial video with sound"></button>
       </div>
 
       <div class="board__tile board__tile--logo">
@@ -159,11 +162,13 @@
       <div class="board__tile board__tile--phone">
         <video class="board__video board__video--cover" src="Assets/Videos/web/Cecil%20Wright%20-%20Felicita.mp4" poster="Assets/posters/Cecil%20Wright%20-%20Felicita.jpg" muted loop playsinline preload="none"></video>
         <h3 class="board__heading">Luxury</h3>
+        <button class="board__play" type="button" data-ratio="16 / 9" aria-label="Play Luxury video with sound"></button>
       </div>
 
       <div class="board__tile board__tile--for">
         <video class="board__video board__video--cover" src="Assets/Videos/web/Bikini.mp4" poster="Assets/posters/Bikini.jpg" muted loop playsinline preload="none"></video>
         <h3 class="board__heading">Lifestyle</h3>
+        <button class="board__play" type="button" data-ratio="9 / 16" aria-label="Play Lifestyle video with sound"></button>
       </div>
 
       <div class="board__tile board__tile--shout" aria-live="off">
@@ -443,6 +448,18 @@
 
   </div>
 
-  <script src="script.js?v=14"></script>
+  <!-- ===================== POP-UP VIDEO PLAYER ===================== -->
+  <dialog class="player" aria-labelledby="player-title">
+    <p class="player__title" id="player-title"></p>
+    <div class="player__stage">
+      <video class="player__video" controls playsinline loop preload="auto"></video>
+      <span class="player__spinner" aria-hidden="true"></span>
+    </div>
+    <button class="player__close" type="button" aria-label="Close video">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5 L19 19 M19 5 L5 19"/></svg>
+    </button>
+  </dialog>
+
+  <script src="script.js?v=15"></script>
 </body>
 </html>

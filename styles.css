@@ -537,6 +537,30 @@ ul { list-style: none; }
   text-shadow: 0 2px 12px rgba(0, 0, 0, .35);
 }
 
+/* the whole tile is the click target, the yellow badge says it plays */
+.board__play {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: none;
+  border: 0;
+  border-radius: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.board__play::after {
+  content: "";
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: #ffe81e url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8.5 5.5v13l10.5-6.5z' fill='%231d1d1d'/%3E%3C/svg%3E") center / 24px no-repeat;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .3);
+  transition: transform .25s cubic-bezier(.2,.9,.3,1.3);
+}
+.board__play:hover::after { transform: scale(1.14); }
+.board__play:focus-visible { outline: 3px solid #fff; outline-offset: -6px; }
+
 
 /* row 2 */
 .board__tile--sign { grid-column: 1 / span 3; background: #a20c4a; }
@@ -627,6 +651,129 @@ ul { list-style: none; }
   .board__tile--for { grid-column: auto; }
   .board__tile--for,
   .board__tile--phone { grid-row: span 2; }
+  .board__play::after { top: 10px; right: 10px; width: 40px; height: 40px; background-size: 22px; }
+  /* two tiles side by side: sized so "Commercial" still fits on a 320px phone */
+  .board__tile--face .board__heading,
+  .board__tile--sign .board__heading,
+  .board__tile--phone .board__heading,
+  .board__tile--for .board__heading { left: 14px; bottom: 14px; font-size: clamp(12px, 4vw, 20px); }
+}
+
+/* ===================== POP-UP VIDEO PLAYER ===================== */
+/* page behind the player stays put: no scrolling, and no jump when the scrollbar goes */
+html:has(.player[open]) { overflow: hidden; }
+html:has(.player[open]) body { padding-right: var(--scrollbar, 0); }
+
+.player { display: none; }
+
+/* only transform and opacity animate, and no blur: nothing here can slow the video down */
+.player[open] {
+  --vh: 100vh;
+  --bar: 64px;
+  --gutter: 24px;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  padding: var(--bar) var(--gutter) var(--gutter);
+  border: 0;
+  color: #fff;
+  background: rgba(10, 10, 16, .96);
+  animation: playerFade .15s ease-out;
+}
+@supports (height: 100dvh) {
+  .player[open] { --vh: 100dvh; }
+}
+
+/* sized from the film's ratio up front, so nothing jumps when the video loads */
+.player__stage {
+  position: relative;
+  aspect-ratio: var(--ratio, 16 / 9);
+  width: min(100vw - 2 * var(--gutter), (var(--vh) - var(--bar) - var(--gutter)) * (var(--ratio, 16 / 9)));
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #000;
+  animation: playerPop .3s cubic-bezier(.2,.9,.3,1.3);
+}
+
+.player__video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  outline: none;
+}
+
+.player__title {
+  position: absolute;
+  top: 0; left: var(--gutter); right: 80px;
+  height: var(--bar);
+  display: flex;
+  align-items: center;
+  font-family: var(--font-display);
+  font-size: clamp(14px, 2vw, 20px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -.01em;
+  pointer-events: none;
+}
+
+.player__close {
+  position: absolute;
+  top: 10px; right: var(--gutter);
+  width: 44px; height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: #ffe81e;
+  cursor: pointer;
+  transition: transform .25s cubic-bezier(.2,.9,.3,1.3);
+}
+.player__close:hover { transform: scale(1.12); }
+.player__close:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.player__close svg {
+  width: 20px; height: 20px;
+  fill: none;
+  stroke: #1d1d1d;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+}
+
+/* the delay keeps it from flashing when the film starts straight away */
+.player__spinner {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 44px; height: 44px;
+  margin: -22px 0 0 -22px;
+  border: 4px solid rgba(255, 255, 255, .3);
+  border-top-color: #ffe81e;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  animation: playerSpin .8s linear infinite;
+}
+.player__stage.is-loading .player__spinner { opacity: 1; transition: opacity .2s .25s; }
+
+@keyframes playerFade { from { opacity: 0; } }
+@keyframes playerPop { from { opacity: 0; transform: translateY(14px) scale(.92); } }
+@keyframes playerSpin { to { transform: rotate(360deg); } }
+
+@media (max-width: 860px) {
+  .player[open] { --bar: 60px; --gutter: 12px; }
+  .player__close { top: 8px; }
+}
+
+/* phones held sideways: the film takes the full height, the close button sits beside it */
+@media (max-height: 500px) {
+  .player[open] { --bar: 8px; --gutter: 8px; }
+  .player__title { display: none; }
+  .player__close { top: 8px; right: 8px; z-index: 1; }
 }
 
 /* ===================== DETAILS (scrollable cards) ===================== */

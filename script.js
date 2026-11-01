@@ -1,13 +1,15 @@
 // Videos: only the ones near the screen load and play; everything else stays
 // paused, so the device never decodes more than a couple of videos at a time
-const videos = document.querySelectorAll("video");
-if (videos.length) {
-  const onScreen = new Set();
-  const play = (v) => {
-    v.muted = true;
-    v.play().catch(() => {});
-  };
+const videos = document.querySelectorAll("video:not(.player__video)");
+const onScreen = new Set();
+let videosOnHold = false; // true while the pop-up player has the screen
+const play = (v) => {
+  if (videosOnHold) return;
+  v.muted = true;
+  v.play().catch(() => {});
+};
 
+if (videos.length) {
   const videoObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach(({ target, isIntersecting }) => {
@@ -31,6 +33,117 @@ if (videos.length) {
   });
   // some browsers block autoplay until the first tap
   window.addEventListener("pointerdown", () => onScreen.forEach(play), { once: true });
+}
+
+// Our Work pop-up: a tile opens its film with sound. One <video> serves every tile
+// and the background videos pause while it plays, so only one video is decoding
+const player = document.querySelector(".player");
+if (player) {
+  const film = player.querySelector(".player__video");
+  const stage = player.querySelector(".player__stage");
+  const title = player.querySelector(".player__title");
+  const root = document.documentElement;
+  const net = navigator.connection;
+
+  // 1080p on big screens, 720p on phones, 480p on data saver and slow connections.
+  // A film that stalls steps down a size, and stays down for the rest of the visit
+  const sizes = ["1080", "720", "480"];
+  let lowest = 0;
+  const pickSize = () => {
+    const phone = Math.max(screen.width, screen.height) < 1100 || navigator.deviceMemory <= 2;
+    const slow = net && (net.saveData || /2g|3g/.test(net.effectiveType));
+    return sizes[Math.max(slow ? 2 : phone ? 1 : 0, lowest)];
+  };
+
+  // the tile plays Assets/Videos/web/X.mp4, its film is Assets/Videos/play/1080/X.mp4
+  const load = (btn) => {
+    const tile = btn.parentElement.querySelector("video");
+    const src = tile.getAttribute("src").replace("/web/", `/play/${pickSize()}/`);
+    if (film.getAttribute("src") === src) return;
+    film.poster = tile.poster;
+    film.src = src;
+  };
+
+  const start = () => {
+    film.play().catch((err) => {
+      // sound refused by the browser: play muted, the controls can unmute
+      if (err.name !== "NotAllowedError") return;
+      film.muted = true;
+      film.play().catch(() => {});
+    });
+  };
+
+  let stallTimer;
+  let resumeAt = 0;
+  const stepDown = () => {
+    const src = film.getAttribute("src");
+    const size = sizes.findIndex((s) => src.includes(`/play/${s}/`));
+    lowest = size + 1;
+    resumeAt = film.currentTime;
+    film.src = src.replace(`/play/${sizes[size]}/`, `/play/${sizes[lowest]}/`);
+    start();
+  };
+  const buffering = () => {
+    stage.classList.add("is-loading");
+    clearTimeout(stallTimer);
+    if (film.getAttribute("src").includes(`/play/${sizes[sizes.length - 1]}/`)) return;
+    // the first frame gets more patience than a stall in the middle of the film
+    stallTimer = setTimeout(stepDown, film.currentTime > 0 ? 1000 : 2500);
+  };
+  const buffered = () => {
+    stage.classList.remove("is-loading");
+    clearTimeout(stallTimer);
+  };
+  film.addEventListener("loadedmetadata", () => {
+    if (resumeAt) film.currentTime = resumeAt;
+    resumeAt = 0;
+  });
+  film.addEventListener("waiting", buffering);
+  ["playing", "pause", "error"].forEach((type) => film.addEventListener(type, buffered));
+
+  const open = (btn) => {
+    load(btn);
+    if (!player.showModal) return window.open(film.src); // browsers older than <dialog>
+    stage.style.setProperty("--ratio", btn.dataset.ratio);
+    title.textContent = btn.parentElement.querySelector(".board__heading").textContent;
+    root.style.setProperty("--scrollbar", `${window.innerWidth - root.clientWidth}px`);
+    videosOnHold = true;
+    videos.forEach((v) => v.pause());
+    player.showModal();
+    // has to stay inside the click, or browsers block the sound
+    film.muted = false;
+    start();
+    buffering();
+  };
+
+  document.querySelectorAll(".board__play").forEach((btn) => {
+    // with a mouse the hover buffers the film, so the click starts it right away
+    let hoverTimer;
+    btn.addEventListener("pointerenter", (e) => {
+      if (e.pointerType === "mouse" && !(net && net.saveData)) hoverTimer = setTimeout(() => load(btn), 150);
+    });
+    btn.addEventListener("pointerleave", () => clearTimeout(hoverTimer));
+    btn.addEventListener("click", () => {
+      clearTimeout(hoverTimer);
+      open(btn);
+    });
+  });
+
+  player.querySelector(".player__close").addEventListener("click", () => player.close());
+  // clicks beside the video land on the dialog itself
+  player.addEventListener("click", (e) => {
+    if (e.target === player) player.close();
+  });
+  // every way out ends here: the close button, a click beside the video, Esc, Android back
+  player.addEventListener("close", () => {
+    buffered();
+    resumeAt = 0;
+    film.pause();
+    film.removeAttribute("src");
+    film.load(); // stops the download and frees the decoder
+    videosOnHold = false;
+    if (!document.hidden) onScreen.forEach(play);
+  });
 }
 
 // Scroll-reveal for the tilted service cards
