@@ -51,7 +51,8 @@ if (player) {
   let lowest = 0;
   const pickSize = () => {
     const phone = Math.max(screen.width, screen.height) < 1100 || navigator.deviceMemory <= 2;
-    const slow = net && (net.saveData || /2g|3g/.test(net.effectiveType));
+    // effectiveType follows latency, a fast line with a slow first response reads as 3g too
+    const slow = net && (net.saveData || /2g/.test(net.effectiveType) || (net.effectiveType === "3g" && net.downlink < 1));
     return sizes[Math.max(slow ? 2 : phone ? 1 : 0, lowest)];
   };
 
