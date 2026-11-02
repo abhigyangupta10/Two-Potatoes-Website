@@ -1187,7 +1187,7 @@ html:has(.player[open]) body { padding-right: var(--scrollbar, 0); }
 }
 .founder:last-child { margin-bottom: 0; }
 
-/* co-founder panel: image right, details left */
+/* second panel: image right, details left */
 .founder--right { grid-template-columns: 1fr 320px; }
 .founder--right .founder__media { order: 2; }
 .founder--right .founder__info  { order: 1; }
