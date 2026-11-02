@@ -92,12 +92,6 @@ ul { list-style: none; }
 }
 .nav__social:hover { background: rgba(255,255,255,.4); }
 
-.nav__burger { display: none; background: none; border: 0; cursor: pointer; }
-.nav__burger span {
-  display: block; width: 22px; height: 2px;
-  background: #fff; margin: 5px 0; border-radius: 2px;
-}
-
 /* ===================== MEADOW HERO ===================== */
 .meadow {
   position: relative;
@@ -1417,9 +1411,10 @@ html:has(.player[open]) body { padding-right: var(--scrollbar, 0); }
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 860px) {
   .nav { padding: 14px 20px; }
-  .nav__center, .nav__right { display: none; }
-  .nav__inner { grid-template-columns: auto 1fr auto; }
-  .nav__burger { display: block; justify-self: end; }
+  .nav__inner { grid-template-columns: auto 1fr auto; column-gap: 16px; }
+  .nav__center { justify-content: center; gap: 20px; }
+  .nav__link { padding: 6px 0; white-space: nowrap; }
+  .nav__right .btn { display: none; } /* the hero has its own Work With Us */
 
   .meadow__wordmark { top: 12%; }
   .meadow__tagline { letter-spacing: 2px; }
@@ -1479,6 +1474,24 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); }
   text-transform: uppercase;
   letter-spacing: -.01em;
   line-height: 1.05;
+}
+
+/* phones held upright: logo and Instagram on top, the section links in one row underneath */
+@media (max-width: 659px) {
+  .nav__inner { grid-template-columns: 1fr auto; row-gap: 4px; }
+  .nav__right { grid-row: 1; grid-column: 2; }
+  .nav__center {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    justify-self: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    max-width: 420px;
+  }
+  .nav__link { font-size: clamp(11.5px, 3.3vw, 13.5px); }
+
+  .meadow__wordmark { top: max(12%, 112px); } /* clear of the link row */
 }
 
 /* ===================== MOTION: respect "reduce motion" (also lighter on low-end devices) ===================== */
